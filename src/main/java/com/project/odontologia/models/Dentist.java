@@ -19,6 +19,26 @@ public class Dentist {
 
     private String password;
 
+    public Dentist() {
+    }
+
+    public Dentist(Integer id, String specialty, String cro, String name, String email, String password) {
+        this.id = id;
+        this.specialty = specialty;
+        this.cro = cro;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    public Dentist(RequestDentist request) {
+        this.name = request.name();
+        this.specialty = request.specialty();
+        this.cro = request.cro();
+        this.email = request.email();
+        this.password = request.password();
+    }
+
     public Integer getId() {
         return id;
     }
