@@ -7,7 +7,7 @@ import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
 @Entity
-public class Mateiral {
+public class Material {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotBlank(message = "Name is mandatory")
@@ -19,7 +19,7 @@ public class Mateiral {
     @NotBlank(message = "Code is mandatory")
     private String code;
 
-    public Mateiral() {
+    public Material() {
     }
 
     public Integer getId() {
@@ -65,7 +65,7 @@ public class Mateiral {
 
     @Override
     public String toString() {
-        return "Mateiral{" +
+        return "Material{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", amount=" + amount +
