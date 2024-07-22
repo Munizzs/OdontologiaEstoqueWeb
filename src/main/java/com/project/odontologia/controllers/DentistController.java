@@ -1,14 +1,13 @@
 package com.project.odontologia.controllers;
 
-import com.project.odontologia.models.Dentist;
-import com.project.odontologia.models.RequestDentist;
+import com.project.odontologia.models.dentist.Dentist;
+import com.project.odontologia.models.dentist.RequestDentist;
 import com.project.odontologia.services.DentistService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController @RequestMapping("/dentist")
@@ -25,7 +24,12 @@ public class DentistController {
 
     @GetMapping({"/{id}"})
     public ResponseEntity findById(@PathVariable Integer id) {
-        return ResponseEntity.ok(service.findById(id));
+        Optional<Dentist> dentist = service.findById(id);
+        if (dentist.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }else{
+            return ResponseEntity.ok(dentist);
+        }
     }
 
     @PostMapping
@@ -36,8 +40,8 @@ public class DentistController {
     }
 
     @PutMapping({"/{id}"})
-    public ResponseEntity updateDentist(@RequestBody @Valid RequestDentist data,@PathVariable Integer id){
-        var update = service.updateById(data,id);
+    public ResponseEntity updateDentist(@PathVariable Integer id, @RequestBody @Valid RequestDentist data){
+        var update = service.updateById(id, data);
         if(update.isPresent()){
             return ResponseEntity.ok(update);
         }else{
