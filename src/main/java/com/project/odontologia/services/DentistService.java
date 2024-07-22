@@ -31,7 +31,6 @@ public class DentistService {
     }
 
     public Optional<Dentist> updateById(Integer id, RequestDentist dentist) {
-        var usu = findById(id);
         return findById(id).map(user -> {
             if(!(dentist.name()==null)){
                 user.setName(dentist.name());
