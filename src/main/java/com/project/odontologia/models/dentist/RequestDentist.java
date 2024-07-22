@@ -1,4 +1,4 @@
-package com.project.odontologia.models;
+package com.project.odontologia.models.dentist;
 
 import jakarta.validation.constraints.NotNull;
 

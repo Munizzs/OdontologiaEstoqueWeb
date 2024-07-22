@@ -1,12 +1,11 @@
-package com.project.odontologia.models;
+package com.project.odontologia.models.dentist;
 
 import jakarta.persistence.*;
 
 @Entity
 public class Dentist {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String specialty;
