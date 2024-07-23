@@ -38,11 +38,8 @@ public class MaterialService {
                 item.setName(material.name());
             }
                 item.setAmount(material.amount());
-            if(!(material.validitye()==null)){
-                item.setValiditye(material.validitye());
-            }
-            if(!(material.code()==null)){
-                item.setCode(material.code());
+            if(!(material.category()==null)){
+                item.setCategory(material.category());
             }
             return repository.save(item);
         });
