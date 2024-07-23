@@ -1,8 +1,8 @@
 package com.project.odontologia.models.material;
 
+import com.project.odontologia.models.category.Category;
 import jakarta.persistence.*;
 import jakarta.persistence.GenerationType;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
@@ -15,30 +15,24 @@ public class Material {
     private String name;
     @Min(value = 0, message = "Amount should not be less than 0")
     private int amount;
-    @Future(message = "Date must be in the future")
-    private LocalDate validitye;
-    @NotBlank(message = "Code is mandatory")
-    private String code;
+    @NotBlank(message = "Category is mandatory") @ManyToOne @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
     public Material() {
     }
 
-    public Material(Integer id, String name, int amount, LocalDate validitye, String code) {
+    public Material(Integer id, String name, int amount, Category category) {
         this.id = id;
         this.name = name;
         this.amount = amount;
-        this.validitye = validitye;
-        this.code = code;
+        this.category = category;
     }
 
     public Material(RequestMaterial request) {
         this.name = request.name();
         this.amount = request.amount();
-        this.validitye = request.validitye();
-        this.code = request.code();
+        this.category = request.category();
     }
-
-
 
     public Integer getId() {
         return id;
@@ -65,20 +59,12 @@ public class Material {
         this.amount = amount;
     }
 
-    public @Future(message = "Date must be in the future") LocalDate getValiditye() {
-        return validitye;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setValiditye(@Future(message = "Date must be in the future") LocalDate validitye) {
-        this.validitye = validitye;
-    }
-
-    public @NotBlank(message = "Code is mandatory") String getCode() {
-        return code;
-    }
-
-    public void setCode(@NotBlank(message = "Code is mandatory") String code) {
-        this.code = code;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
@@ -87,8 +73,7 @@ public class Material {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", amount=" + amount +
-                ", validitye=" + validitye +
-                ", code='" + code + '\'' +
+                ", category=" + category +
                 '}';
     }
 }
