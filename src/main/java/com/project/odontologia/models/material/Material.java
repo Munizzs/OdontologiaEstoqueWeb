@@ -2,6 +2,7 @@ package com.project.odontologia.models.material;
 
 import jakarta.persistence.*;
 import jakarta.persistence.GenerationType;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
@@ -21,6 +22,23 @@ public class Material {
 
     public Material() {
     }
+
+    public Material(Integer id, String name, int amount, LocalDate validitye, String code) {
+        this.id = id;
+        this.name = name;
+        this.amount = amount;
+        this.validitye = validitye;
+        this.code = code;
+    }
+
+    public Material(RequestMaterial request) {
+        this.name = request.name();
+        this.amount = request.amount();
+        this.validitye = request.validitye();
+        this.code = request.code();
+    }
+
+
 
     public Integer getId() {
         return id;

@@ -1,7 +1,6 @@
 package com.project.odontologia.models.dentist;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record RequestDentist(

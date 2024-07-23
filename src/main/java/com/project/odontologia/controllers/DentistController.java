@@ -52,6 +52,6 @@ public class DentistController {
     @DeleteMapping({"/{id}"})
     public ResponseEntity removeDentist(@PathVariable Integer id){
         service.deleteById(id);
-            return ResponseEntity.ok().build();
+        return ResponseEntity.ok().build();
     }
 }
