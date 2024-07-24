@@ -12,8 +12,12 @@ import java.util.Optional;
 @Service
 public class MaterialService {
 
+    private final MaterialRepository repository;
+
     @Autowired
-    private MaterialRepository repository;
+    public MaterialService(MaterialRepository repository) {
+        this.repository = repository;
+    }
 
     public List<Material> findAll(){
         return repository.findAll();

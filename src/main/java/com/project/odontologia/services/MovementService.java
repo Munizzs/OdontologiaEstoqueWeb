@@ -11,9 +11,13 @@ import java.util.Optional;
 
 @Service
 public class MovementService {
+    
+    private final MovementRepository repository;
 
     @Autowired
-    private MovementRepository repository;
+    public MovementService(MovementRepository repository) {
+        this.repository = repository;
+    }
 
     public List<InventoryTransactions> findAll(){
         return repository.findAll();

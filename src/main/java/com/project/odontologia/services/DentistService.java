@@ -12,8 +12,12 @@ import java.util.Optional;
 @Service
 public class DentistService {
 
+    private final DentistRepository repository;
+
     @Autowired
-    private DentistRepository repository;
+    public DentistService(DentistRepository repository) {
+        this.repository = repository;
+    }
 
     public List<Dentist> listAll(){
         return repository.findAll();
