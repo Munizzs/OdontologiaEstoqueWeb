@@ -1,5 +1,6 @@
 package com.project.odontologia.controllers;
 
+import com.project.odontologia.exceptions.ResourceNotFoundException;
 import com.project.odontologia.models.dentist.Dentist;
 import com.project.odontologia.models.dentist.RequestDentist;
 import com.project.odontologia.services.DentistService;
@@ -28,19 +29,15 @@ public class DentistController {
 
     @GetMapping({"/{id}"})
     public ResponseEntity<?> findById(@PathVariable Integer id) {
-        Optional<Dentist> dentist = service.findById(id);
-        if (dentist.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }else{
-            return ResponseEntity.ok(dentist);
-        }
+        var dentist = service.findById(id).orElseThrow(() -> new ResourceNotFoundException("Dentista não encontrado com id " + id));
+        return ResponseEntity.ok(dentist);
     }
 
     @PostMapping
     public ResponseEntity<?> registerDentist(@RequestBody @Valid RequestDentist data){
         Dentist dentist = new Dentist(data);
         service.save(dentist);
-        return ResponseEntity.status(201).build();
+        return ResponseEntity.status(201).body("Id "+dentist.getId()+" Criado");
     }
 
     @PutMapping({"/{id}"})

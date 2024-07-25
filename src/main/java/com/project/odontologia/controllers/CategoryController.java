@@ -1,5 +1,6 @@
 package com.project.odontologia.controllers;
 
+import com.project.odontologia.exceptions.ResourceNotFoundException;
 import com.project.odontologia.models.category.Category;
 import com.project.odontologia.models.category.RequestCategory;
 import com.project.odontologia.services.CategoryService;
@@ -26,20 +27,15 @@ public class CategoryController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Integer id){
-        var categoryId = service.findById(id);
-        if (categoryId.isEmpty()){
-            return ResponseEntity.notFound().build();
-
-        }else {
-            return ResponseEntity.ok(categoryId);
-        }
+        var categoryId = service.findById(id).orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrado com id " + id));
+        return ResponseEntity.ok(categoryId);
     }
 
     @PostMapping
     public ResponseEntity<?> read(@RequestBody RequestCategory data){
         Category category = new Category(data);
         var readCategory = service.save(category);
-        return ResponseEntity.status(201).build();
+        return ResponseEntity.status(201).body("Id "+category.getId()+" Criado");
     }
 
     @PutMapping("/{id}")
