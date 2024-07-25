@@ -41,11 +41,7 @@ public class MovimentController {
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable Integer id, @Valid @RequestBody RequestMovement data){
         var movimentUpdate = service.update(id, data);
-        if (movimentUpdate.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }else{
             return ResponseEntity.ok(movimentUpdate);
-        }
     }
 
     @DeleteMapping("/{id}")

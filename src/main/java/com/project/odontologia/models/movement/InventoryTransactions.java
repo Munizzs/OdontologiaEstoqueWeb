@@ -16,7 +16,7 @@ public class InventoryTransactions {
     @Enumerated(EnumType.STRING) @Column(nullable = false)
     private TransactionType type;
     @Min(value = 0, message = "Amount should not be less than 0")
-    private int amount;
+    private Integer amount;
     @PastOrPresent(message = "Date should not be in the future")
     private LocalDate date;
     @NotBlank(message = "Material is mandatory") @ManyToOne @JoinColumn(name = "materialId", nullable = false)
@@ -27,7 +27,7 @@ public class InventoryTransactions {
     public InventoryTransactions() {
     }
 
-    public InventoryTransactions(Integer id, TransactionType type, int amount, LocalDate date, Material material, Dentist dentist) {
+    public InventoryTransactions(Integer id, TransactionType type, Integer amount, LocalDate date, Material material, Dentist dentist) {
         this.id = id;
         this.type = type;
         this.amount = amount;
@@ -61,7 +61,7 @@ public class InventoryTransactions {
     }
 
     @Min(value = 0, message = "Amount should not be less than 0")
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 

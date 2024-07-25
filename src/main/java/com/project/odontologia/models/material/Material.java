@@ -14,14 +14,14 @@ public class Material {
     @NotBlank(message = "Name is mandatory")
     private String name;
     @Min(value = 0, message = "Amount should not be less than 0")
-    private int amount;
+    private Integer amount;
     @NotBlank(message = "Category is mandatory") @ManyToOne @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
     public Material() {
     }
 
-    public Material(Integer id, String name, int amount, Category category) {
+    public Material(Integer id, String name, Integer amount, Category category) {
         this.id = id;
         this.name = name;
         this.amount = amount;
@@ -51,7 +51,7 @@ public class Material {
     }
 
     @Min(value = 0, message = "Amount should not be less than 0")
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
