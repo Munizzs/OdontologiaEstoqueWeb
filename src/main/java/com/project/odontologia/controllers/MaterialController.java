@@ -10,17 +10,22 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController @RequestMapping("/material")
 public class MaterialController {
+
+    private final MaterialService service;
+
     @Autowired
-    private MaterialService service;
+    public MaterialController(MaterialService service) {
+        this.service = service;
+    }
 
     @GetMapping
-    public ResponseEntity getAll(){
+    public ResponseEntity<?> getAll(){
         var allMaterial = service.findAll();
         return ResponseEntity.ok(allMaterial);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getById(@PathVariable Integer id){
+    public ResponseEntity<?> getById(@PathVariable Integer id){
         var materialId = service.findById(id);
         if(materialId.isEmpty()){
             return ResponseEntity.notFound().build();
@@ -30,21 +35,21 @@ public class MaterialController {
     }
 
     @PostMapping
-    public ResponseEntity read(@Valid @RequestBody RequestMaterial data){
+    public ResponseEntity<?> read(@Valid @RequestBody RequestMaterial data){
         Material material = new Material(data);
         service.save(material);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(201).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity modify(@PathVariable Integer id, @Valid @RequestBody RequestMaterial data){
+    public ResponseEntity<?> modify(@PathVariable Integer id, @Valid @RequestBody RequestMaterial data){
         var materialModify = service.update(id,data);
             return ResponseEntity.ok(materialModify);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity remove(@PathVariable Integer id){
+    public ResponseEntity<?> remove(@PathVariable Integer id){
         service.removeById(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

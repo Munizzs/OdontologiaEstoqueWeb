@@ -11,17 +11,21 @@ import org.springframework.web.bind.annotation.*;
 @RestController @RequestMapping("/moviment")
 public class MovimentController {
 
+    private final MovementService service;
+
     @Autowired
-    private MovementService service;
+    public MovimentController(MovementService service) {
+        this.service = service;
+    }
 
     @GetMapping
-    public ResponseEntity getAll(){
+    public ResponseEntity<?> getAll(){
         var allMoviment = service.findAll();
         return ResponseEntity.ok(allMoviment);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getById(@PathVariable Integer id){
+    public ResponseEntity<?> getById(@PathVariable Integer id){
         var movimentId = service.findById(id);
         if (movimentId.isEmpty()){
             return ResponseEntity.notFound().build();
@@ -32,21 +36,21 @@ public class MovimentController {
     }
 
     @PostMapping
-    public ResponseEntity read(@RequestBody RequestMovement data){
+    public ResponseEntity<?> read(@RequestBody RequestMovement data){
         InventoryTransactions transactions = new InventoryTransactions(data);
         var readTransactions = service.save(transactions);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(201).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@PathVariable Integer id, @Valid @RequestBody RequestMovement data){
+    public ResponseEntity<?> update(@PathVariable Integer id, @Valid @RequestBody RequestMovement data){
         var movimentUpdate = service.update(id, data);
             return ResponseEntity.ok(movimentUpdate);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity remove(@PathVariable Integer id){
+    public ResponseEntity<?> remove(@PathVariable Integer id){
         service.removeById(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

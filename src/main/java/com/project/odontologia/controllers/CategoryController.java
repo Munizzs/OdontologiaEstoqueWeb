@@ -11,17 +11,21 @@ import org.springframework.web.bind.annotation.*;
 @RestController @RequestMapping("/category")
 public class CategoryController {
 
+    private final CategoryService service;
+
     @Autowired
-    private CategoryService service;
+    public CategoryController(CategoryService service) {
+        this.service = service;
+    }
 
     @GetMapping
-    public ResponseEntity getAll(){
+    public ResponseEntity<?> getAll(){
         var allCategory = service.findAll();
         return ResponseEntity.ok(allCategory);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getById(@PathVariable Integer id){
+    public ResponseEntity<?> getById(@PathVariable Integer id){
         var categoryId = service.findById(id);
         if (categoryId.isEmpty()){
             return ResponseEntity.notFound().build();
@@ -32,21 +36,21 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity read(@RequestBody RequestCategory data){
+    public ResponseEntity<?> read(@RequestBody RequestCategory data){
         Category category = new Category(data);
         var readCategory = service.save(category);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(201).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@PathVariable Integer id, @Valid @RequestBody RequestCategory data){
+    public ResponseEntity<?> update(@PathVariable Integer id, @Valid @RequestBody RequestCategory data){
         var categoryUpdate = service.update(id, data);
             return ResponseEntity.ok(categoryUpdate);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity remove(@PathVariable Integer id){
+    public ResponseEntity<?> remove(@PathVariable Integer id){
         service.removeById(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }
