@@ -1,5 +1,6 @@
 package com.project.odontologia.controllers;
 
+import com.project.odontologia.exceptions.ResourceNotFoundException;
 import com.project.odontologia.models.material.Material;
 import com.project.odontologia.models.material.RequestMaterial;
 import com.project.odontologia.services.MaterialService;
@@ -26,19 +27,15 @@ public class MaterialController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Integer id){
-        var materialId = service.findById(id);
-        if(materialId.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }else {
+        var materialId = service.findById(id).orElseThrow(() -> new ResourceNotFoundException("Material não encontrado com id " + id));
             return ResponseEntity.ok(materialId);
-        }
     }
 
     @PostMapping
     public ResponseEntity<?> read(@Valid @RequestBody RequestMaterial data){
         Material material = new Material(data);
         service.save(material);
-        return ResponseEntity.status(201).build();
+        return ResponseEntity.status(201).body("Id "+material.getId()+" Criado");
     }
 
     @PutMapping("/{id}")
