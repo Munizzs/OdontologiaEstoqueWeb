@@ -20,7 +20,9 @@ public class SwaggerConfig {
                         .license(new License().name("Apache 2.0").url("http://springdoc.org")))
                         .externalDocs(new ExternalDocumentation()
                         .description("SpringDoc Documentation")
-                        .url("https://springdoc.org/"));
+                        .url("https://springdoc.org/")
+                        .description("Matheus Muniz")
+                        .url("https://github.com/Munizzs"));
     }
 
     @Bean
