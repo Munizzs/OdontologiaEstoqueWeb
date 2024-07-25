@@ -39,11 +39,7 @@ public class MaterialController {
     @PutMapping("/{id}")
     public ResponseEntity modify(@PathVariable Integer id, @Valid @RequestBody RequestMaterial data){
         var materialModify = service.update(id,data);
-        if(materialModify.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }else {
             return ResponseEntity.ok(materialModify);
-        }
     }
 
     @DeleteMapping("/{id}")

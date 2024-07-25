@@ -41,11 +41,7 @@ public class CategoryController {
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable Integer id, @Valid @RequestBody RequestCategory data){
         var categoryUpdate = service.update(id, data);
-        if (categoryUpdate.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }else{
             return ResponseEntity.ok(categoryUpdate);
-        }
     }
 
     @DeleteMapping("/{id}")

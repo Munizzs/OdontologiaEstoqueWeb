@@ -42,16 +42,12 @@ public class DentistController {
     @PutMapping({"/{id}"})
     public ResponseEntity updateDentist(@PathVariable Integer id, @RequestBody @Valid RequestDentist data){
         var update = service.updateById(id, data);
-        if(update.isPresent()){
             return ResponseEntity.ok(update);
-        }else{
-            return ResponseEntity.notFound().build();
-        }
     }
 
-    @DeleteMapping({"/{id}"})
+    @DeleteMapping("/{id}")
     public ResponseEntity removeDentist(@PathVariable Integer id){
-        service.deleteById(id);
+        service.removeById(id);
         return ResponseEntity.ok().build();
     }
 }

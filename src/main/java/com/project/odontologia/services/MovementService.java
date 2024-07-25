@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 public class MovementService {
-    
+
     private final MovementRepository repository;
 
     @Autowired
@@ -24,38 +24,39 @@ public class MovementService {
     }
 
     public Optional<InventoryTransactions> findById(Integer id){
-        var transactionsId = repository.findById(id);
-        if(transactionsId.isPresent()){
-            return transactionsId;
-        }else{
-            return null;
-        }
+        return repository.findById(id);
     }
 
     public InventoryTransactions save(InventoryTransactions transactions){
         return repository.save(transactions);
     }
 
-    public Optional<InventoryTransactions> update(Integer id, RequestMovement movement){
+    public InventoryTransactions update(Integer id, RequestMovement movement){
         return findById(id).map(mov -> {
-            if(!(movement.type()==null)){
+
+            if(movement.type()!=null)
                 mov.setType(movement.type());
-            }
-            mov.setAmount(movement.amount());
-            if(!(movement.date()==null)){
+
+            if(movement.amount()!=null)
+                mov.setAmount(movement.amount());
+
+            if(movement.date()!=null)
                 mov.setDate(movement.date());
-            }
-            if(!(movement.material()==null)){
+
+            if(movement.material()!=null)
                 mov.setMaterial(movement.material());
-            }
-            if(!(movement.dentist()==null)){
+
+            if(movement.dentist()!=null)
                 mov.setDentist(movement.dentist());
-            }
+
             return repository.save(mov);
-        });
+        }).orElseThrow(() -> new IllegalArgumentException("Status com id " + id + " não existe."));
     }
 
     public void removeById(Integer id){
-        repository.deleteById(id);
+        if(repository.existsById(id))
+            repository.deleteById(id);
+        else
+            throw new IllegalArgumentException("Status com id " + id + " não existe.");
     }
 }

@@ -24,31 +24,29 @@ public class CategoryService {
     }
 
     public Optional<Category> findById(Integer id){
-        var categoryId = repository.findById(id);
-        if(categoryId.isPresent()){
-            return categoryId;
-        }else{
-            return null;
-        }
+         return repository.findById(id);
     }
 
     public Category save(Category category){
         return repository.save(category);
     }
 
-    public Optional<Category> update(Integer id, RequestCategory category){
+    public Category update(Integer id, RequestCategory category){
         return findById(id).map(categ -> {
-            if(!(category.nome()==null)){
+            if(category.nome()!=null)
                 categ.setNome(category.nome());
-            }
-            if(!(category.description()==null)){
+
+            if(category.description()!=null)
                 categ.setDescription(category.description());
-            }
+
             return repository.save(categ);
-        });
+        }).orElseThrow(() -> new IllegalArgumentException("Categoria com id " + id + " não existe."));
     }
 
     public void removeById(Integer id){
-        repository.deleteById(id);
+        if(repository.existsById(id))
+            repository.deleteById(id);
+        else
+            throw new IllegalArgumentException("Categoria com id " + id + " não existe.");
     }
 }

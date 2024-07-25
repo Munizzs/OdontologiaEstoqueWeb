@@ -24,32 +24,32 @@ public class MaterialService {
     }
 
     public Optional<Material> findById(Integer id){
-        var materialId = repository.findById(id);
-        if(materialId.isPresent()){
-            return materialId;
-        }else{
-            return null;
-        }
+        return repository.findById(id);
     }
 
     public Material save(Material material){
         return repository.save(material);
     }
 
-    public Optional<Material> update(Integer id, RequestMaterial material){
+    public Material update(Integer id, RequestMaterial material){
         return findById(id).map(item -> {
-            if(!(material.name()==null)){
+            if(material.name()!=null)
                 item.setName(material.name());
-            }
+
+            if(material.amount()!=null)
                 item.setAmount(material.amount());
-            if(!(material.category()==null)){
+
+            if(material.category()!=null)
                 item.setCategory(material.category());
-            }
+
             return repository.save(item);
-        });
+        }).orElseThrow(() -> new IllegalArgumentException("Item com id " + id + " não existe."));
     }
 
     public void removeById(Integer id){
-        repository.deleteById(id);
+        if(repository.existsById(id))
+            repository.deleteById(id);
+        else
+            throw new IllegalArgumentException("Item com id " + id + " não existe.");
     }
 }
