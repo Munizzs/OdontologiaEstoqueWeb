@@ -13,17 +13,21 @@ import java.util.Optional;
 @RestController @RequestMapping("/dentist")
 public class DentistController {
 
+    private final DentistService service;
+
     @Autowired
-    private DentistService service;
+    public DentistController(DentistService service) {
+        this.service = service;
+    }
 
     @GetMapping
-    public ResponseEntity getAllDentist(){
+    public ResponseEntity<?> getAllDentist(){
         var listAll = service.listAll();
         return ResponseEntity.ok(listAll);
     }
 
     @GetMapping({"/{id}"})
-    public ResponseEntity findById(@PathVariable Integer id) {
+    public ResponseEntity<?> findById(@PathVariable Integer id) {
         Optional<Dentist> dentist = service.findById(id);
         if (dentist.isEmpty()){
             return ResponseEntity.notFound().build();
@@ -33,21 +37,21 @@ public class DentistController {
     }
 
     @PostMapping
-    public ResponseEntity registerDentist(@RequestBody @Valid RequestDentist data){
+    public ResponseEntity<?> registerDentist(@RequestBody @Valid RequestDentist data){
         Dentist dentist = new Dentist(data);
         service.save(dentist);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(201).build();
     }
 
     @PutMapping({"/{id}"})
-    public ResponseEntity updateDentist(@PathVariable Integer id, @RequestBody @Valid RequestDentist data){
-        var update = service.updateById(id, data);
-            return ResponseEntity.ok(update);
+    public ResponseEntity<?> updateDentist(@PathVariable Integer id, @RequestBody @Valid RequestDentist data){
+        var updatedDentist = service.updateById(id, data);
+            return ResponseEntity.ok(updatedDentist);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity removeDentist(@PathVariable Integer id){
+    public ResponseEntity<?> removeDentist(@PathVariable Integer id){
         service.removeById(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }
