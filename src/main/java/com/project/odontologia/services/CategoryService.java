@@ -33,8 +33,8 @@ public class CategoryService {
 
     public Category update(Integer id, RequestCategory category){
         return findById(id).map(categ -> {
-            if(category.nome()!=null)
-                categ.setNome(category.nome());
+            if(category.name()!=null)
+                categ.setNome(category.name());
 
             if(category.description()!=null)
                 categ.setDescription(category.description());

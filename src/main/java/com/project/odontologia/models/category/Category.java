@@ -24,7 +24,7 @@ public class Category {
     }
 
     public Category(RequestCategory request) {
-        this.nome = request.nome();
+        this.nome = request.name();
         this.description = request.description();
     }
 
