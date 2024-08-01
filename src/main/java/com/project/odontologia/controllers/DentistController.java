@@ -2,7 +2,9 @@ package com.project.odontologia.controllers;
 
 import com.project.odontologia.exceptions.ResourceNotFoundException;
 import com.project.odontologia.models.dentist.Dentist;
-import com.project.odontologia.models.dentist.RequestDentist;
+import com.project.odontologia.models.dentist.DentistCreationDTO;
+import com.project.odontologia.models.dentist.DentistDTO;
+import com.project.odontologia.models.dentist.DentistUpdateDTO;
 import com.project.odontologia.services.DentistService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -45,7 +47,7 @@ public class DentistController {
     })
     @GetMapping({"/{id}"})
     public ResponseEntity<?> findById(@PathVariable Integer id) {
-        var dentist = service.findById(id).orElseThrow(() -> new ResourceNotFoundException("Dentista não encontrado com id " + id));
+        var dentist = service.findById(id);
         return ResponseEntity.ok(dentist);
     }
 
@@ -54,10 +56,9 @@ public class DentistController {
             @ApiResponse(responseCode = "201", description = "Dentista registrado com sucesso")
     })
     @PostMapping
-    public ResponseEntity<?> registerDentist(@RequestBody @Valid RequestDentist data){
-        Dentist dentist = new Dentist(data);
-        service.save(dentist);
-        return ResponseEntity.status(201).body("Id "+dentist.getId()+" Criado");
+    public ResponseEntity<?> registerDentist(@RequestBody @Valid DentistCreationDTO dentistCreationDTO){
+        DentistDTO dentistDTO = service.save(dentistCreationDTO);
+        return ResponseEntity.status(201).body("Id "+dentistDTO.getId()+" Criado");
     }
 
     @Operation(summary = "Atualizar um dentista existente")
@@ -67,9 +68,9 @@ public class DentistController {
             @ApiResponse(responseCode = "404", description = "Dentista não encontrado")
     })
     @PutMapping({"/{id}"})
-    public ResponseEntity<?> updateDentist(@PathVariable Integer id, @RequestBody @Valid RequestDentist data){
-        var updatedDentist = service.updateById(id, data);
-            return ResponseEntity.ok(updatedDentist);
+    public ResponseEntity<?> updateDentist(@PathVariable Integer id, @RequestBody @Valid DentistUpdateDTO dentistUpdateDTO){
+        var dentistDTO = service.updateById(id, dentistUpdateDTO);
+            return ResponseEntity.ok(dentistDTO);
     }
 
     @Operation(summary = "Remover um dentista")

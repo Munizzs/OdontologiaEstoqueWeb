@@ -2,7 +2,9 @@ package com.project.odontologia.controllers;
 
 import com.project.odontologia.exceptions.ResourceNotFoundException;
 import com.project.odontologia.models.material.Material;
-import com.project.odontologia.models.material.RequestMaterial;
+import com.project.odontologia.models.material.MaterialCreationDTO;
+import com.project.odontologia.models.material.MaterialDTO;
+import com.project.odontologia.models.material.MaterialUpdateDTO;
 import com.project.odontologia.services.MaterialService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -45,7 +47,7 @@ public class MaterialController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Integer id){
-        var materialId = service.findById(id).orElseThrow(() -> new ResourceNotFoundException("Material não encontrado com id " + id));
+        var materialId = service.findById(id);
             return ResponseEntity.ok(materialId);
     }
 
@@ -54,10 +56,9 @@ public class MaterialController {
             @ApiResponse(responseCode = "201", description = "Material registrado com sucesso")
     })
     @PostMapping
-    public ResponseEntity<?> read(@Valid @RequestBody RequestMaterial data){
-        Material material = new Material(data);
-        service.save(material);
-        return ResponseEntity.status(201).body("Id "+material.getId()+" Criado");
+    public ResponseEntity<?> read(@Valid @RequestBody MaterialCreationDTO materialCreationDTO){
+        MaterialDTO materialDTO = service.save(materialCreationDTO);
+        return ResponseEntity.status(201).body("Id "+materialDTO.getId()+" Criado");
     }
 
     @Operation(summary = "Atualizar um material existente")
@@ -67,9 +68,9 @@ public class MaterialController {
             @ApiResponse(responseCode = "404", description = "Material não encontrado")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<?> modify(@PathVariable Integer id, @Valid @RequestBody RequestMaterial data){
-        var materialModify = service.update(id,data);
-            return ResponseEntity.ok(materialModify);
+    public ResponseEntity<?> modify(@PathVariable Integer id, @Valid @RequestBody MaterialUpdateDTO materialUpdateDTO){
+        MaterialDTO materialDTO = service.update(id,materialUpdateDTO);
+            return ResponseEntity.ok(materialDTO);
     }
 
     @Operation(summary = "Remover um material")

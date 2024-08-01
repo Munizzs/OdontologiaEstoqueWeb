@@ -1,12 +1,9 @@
 package com.project.odontologia.models.dentist;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
-@Entity
-public class Dentist {
-
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class DentistDTO{
     private Integer id;
     @NotBlank(message = "Speciality is mandatory")
     private String specialty;
@@ -20,18 +17,6 @@ public class Dentist {
     @NotBlank(message = "Password is mandatory")
     //@Size(min = 8, max = 20, message = "Password must be between 8 and 20 characters")
     private String password;
-
-    public Dentist() {
-    }
-
-    public Dentist(Integer id, String specialty, String cro, String name, String email, String password) {
-        this.id = id;
-        this.specialty = specialty;
-        this.cro = cro;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
 
     public Integer getId() {
         return id;
@@ -79,17 +64,5 @@ public class Dentist {
 
     public void setPassword(@NotBlank(message = "Password is mandatory") String password) {
         this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "Dentist{" +
-                "id=" + id +
-                ", specialty='" + specialty + '\'' +
-                ", cro='" + cro + '\'' +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
     }
 }

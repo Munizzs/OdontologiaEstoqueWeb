@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 import jakarta.persistence.GenerationType;
 import jakarta.validation.constraints.*;
 
-import java.time.LocalDate;
-
 @Entity
 public class Material {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,12 +24,6 @@ public class Material {
         this.name = name;
         this.amount = amount;
         this.category = category;
-    }
-
-    public Material(RequestMaterial request) {
-        this.name = request.name();
-        this.amount = request.amount();
-        this.category = request.category();
     }
 
     public Integer getId() {
