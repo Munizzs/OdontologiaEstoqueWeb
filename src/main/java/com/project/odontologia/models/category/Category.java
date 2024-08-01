@@ -5,13 +5,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Category {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @NotBlank(message = "Name is mandatory")
+    @NotBlank(message = "Name is mandatory") @Size(min = 1, max = 50)
     private String nome;
+    @Size(min = 1, max = 1000)
     private String description;
 
     public Category() {
@@ -21,11 +23,6 @@ public class Category {
         this.id = id;
         this.nome = nome;
         this.description = description;
-    }
-
-    public Category(RequestCategory request) {
-        this.nome = request.name();
-        this.description = request.description();
     }
 
     public Integer getId() {

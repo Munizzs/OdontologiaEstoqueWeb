@@ -2,7 +2,9 @@ package com.project.odontologia.controllers;
 
 import com.project.odontologia.exceptions.ResourceNotFoundException;
 import com.project.odontologia.models.category.Category;
-import com.project.odontologia.models.category.RequestCategory;
+import com.project.odontologia.models.category.CategoryCreationDTO;
+import com.project.odontologia.models.category.CategoryDTO;
+import com.project.odontologia.models.category.CategoryUpdateDTO;
 import com.project.odontologia.services.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -45,7 +47,7 @@ public class CategoryController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Integer id){
-        var categoryId = service.findById(id).orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrado com id " + id));
+        var categoryId = service.findById(id);
         return ResponseEntity.ok(categoryId);
     }
 
@@ -54,10 +56,9 @@ public class CategoryController {
             @ApiResponse(responseCode = "201", description = "Categoria registrada com sucesso")
     })
     @PostMapping
-    public ResponseEntity<?> read(@RequestBody RequestCategory data){
-        Category category = new Category(data);
-        var readCategory = service.save(category);
-        return ResponseEntity.status(201).body("Id "+category.getId()+" Criado");
+    public ResponseEntity<?> read(@RequestBody CategoryCreationDTO categoryCreationDTO){
+        CategoryDTO categoryDTO = service.save(categoryCreationDTO);
+        return ResponseEntity.status(201).body("Id "+categoryDTO.getId()+" Criado");
     }
 
     @Operation(summary = "Atualizar uma categoria existente")
@@ -67,8 +68,8 @@ public class CategoryController {
             @ApiResponse(responseCode = "404", description = "Categoria não encontrada")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Integer id, @Valid @RequestBody RequestCategory data){
-        var categoryUpdate = service.update(id, data);
+    public ResponseEntity<?> update(@PathVariable Integer id, @Valid @RequestBody CategoryUpdateDTO categoryUpdateDTO){
+        var categoryUpdate = service.update(id, categoryUpdateDTO);
             return ResponseEntity.ok(categoryUpdate);
     }
 
