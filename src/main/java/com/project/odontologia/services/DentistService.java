@@ -1,55 +1,64 @@
 package com.project.odontologia.services;
 
-import com.project.odontologia.models.dentist.Dentist;
-import com.project.odontologia.models.dentist.RequestDentist;
+import com.project.odontologia.models.dentist.*;
 import com.project.odontologia.repositories.DentistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DentistService {
 
     private final DentistRepository repository;
+    private final DentistMapper mapper;
 
     @Autowired
-    public DentistService(DentistRepository repository) {
+    public DentistService(DentistRepository repository, DentistMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
-    public List<Dentist> listAll(){
-        return repository.findAll();
+    public List<DentistDTO> listAll(){
+        return repository.findAll().stream()
+                .map(mapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public Dentist save(Dentist dentist){
-        return repository.save(dentist);
+    public DentistDTO save(DentistCreationDTO dentistCreationDTO){
+        Dentist dentist = mapper.toEntity(dentistCreationDTO);
+        repository.save(dentist);
+        return mapper.toDTO(dentist);
     }
 
-    public Optional<Dentist> findById(Integer id) {
-            return repository.findById(id);
+    public DentistDTO findById(Integer id) {
+        Dentist dentist = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Dentista com id " + id + " não existe."));
+        return mapper.toDTO(dentist);
     }
 
-    public Dentist updateById(Integer id, RequestDentist dentist) {
-        return findById(id).map(user -> {
-            if(dentist.name()!=null)
-                user.setName(dentist.name());
+    public DentistDTO updateById(Integer id, DentistUpdateDTO dentistUpdateDTO) {
+        Dentist dentist = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Dentista com id " + id + " não existe."));
 
-            if(dentist.specialty()!=null)
-                user.setSpecialty(dentist.specialty());
+        if(dentistUpdateDTO.getName()!=null)
+            dentist.setName(dentistUpdateDTO.getName());
 
-            if(dentist.cro()!=null)
-                user.setCro(dentist.cro());
+        if (dentistUpdateDTO.getSpecialty() != null)
+            dentist.setSpecialty(dentistUpdateDTO.getSpecialty());
 
-            if(dentist.email()!=null)
-                user.setEmail(dentist.email());
+        if (dentistUpdateDTO.getCro() != null)
+            dentist.setCro(dentistUpdateDTO.getCro());
 
-            if(dentist.password()!=null)
-                user.setPassword(dentist.password());
+        if (dentistUpdateDTO.getEmail() != null)
+            dentist.setEmail(dentistUpdateDTO.getEmail());
 
-            return repository.save(user);
-        }).orElseThrow(() -> new IllegalArgumentException("Dentista com id " + id + " não existe."));
+        if (dentistUpdateDTO.getPassword() != null)
+            dentist.setPassword(dentistUpdateDTO.getPassword());
+
+        repository.save(dentist);
+
+        return mapper.toDTO(dentist);
     }
 
     public void removeById(Integer id){

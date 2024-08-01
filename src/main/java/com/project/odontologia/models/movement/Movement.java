@@ -10,7 +10,7 @@ import jakarta.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
 
 @Entity
-public class InventoryTransactions {
+public class Movement {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Enumerated(EnumType.STRING) @Column(nullable = false)
@@ -24,24 +24,16 @@ public class InventoryTransactions {
     @NotBlank(message = "Dentist is mandatory") @ManyToOne @JoinColumn(name = "dentistId", nullable = false)
     private Dentist dentist;
 
-    public InventoryTransactions() {
+    public Movement() {
     }
 
-    public InventoryTransactions(Integer id, TransactionType type, Integer amount, LocalDate date, Material material, Dentist dentist) {
+    public Movement(Integer id, TransactionType type, Integer amount, LocalDate date, Material material, Dentist dentist) {
         this.id = id;
         this.type = type;
         this.amount = amount;
         this.date = date;
         this.material = material;
         this.dentist = dentist;
-    }
-
-    public InventoryTransactions(RequestMovement request) {
-        this.type = request.type();
-        this.amount = request.amount();
-        this.date = request.date();
-        this.material = request.material();
-        this.dentist = request.dentist();
     }
 
     public Integer getId() {
@@ -95,7 +87,7 @@ public class InventoryTransactions {
 
     @Override
     public String toString() {
-        return "InventoryTransactions{" +
+        return "Movement{" +
                 "id=" + id +
                 ", type=" + type +
                 ", amount=" + amount +

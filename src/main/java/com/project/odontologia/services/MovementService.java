@@ -1,56 +1,64 @@
 package com.project.odontologia.services;
 
-import com.project.odontologia.models.movement.InventoryTransactions;
-import com.project.odontologia.models.movement.RequestMovement;
+import com.project.odontologia.models.movement.*;
 import com.project.odontologia.repositories.MovementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MovementService {
 
     private final MovementRepository repository;
+    private final MovementMapper mapper;
 
     @Autowired
-    public MovementService(MovementRepository repository) {
+    public MovementService(MovementRepository repository,MovementMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
-    public List<InventoryTransactions> findAll(){
-        return repository.findAll();
+    public List<MovementDTO> findAll(){
+        return repository.findAll().stream()
+                .map(mapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public Optional<InventoryTransactions> findById(Integer id){
-        return repository.findById(id);
+    public MovementDTO findById(Integer id){
+        Movement movement = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Status com id " + id + " não existe."));
+        return mapper.toDTO(movement);
     }
 
-    public InventoryTransactions save(InventoryTransactions transactions){
-        return repository.save(transactions);
+    public MovementDTO save(MovementCreationDTO movementCreationDTO){
+        Movement movement = mapper.toEntity(movementCreationDTO);
+        repository.save(movement);
+        return mapper.toDTO(movement);
     }
 
-    public InventoryTransactions update(Integer id, RequestMovement movement){
-        return findById(id).map(mov -> {
+    public MovementDTO update(Integer id, MovementUpdateDTO movementUpdateDTO){
+        Movement movement = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Status com id " + id + " não existe."));
 
-            if(movement.type()!=null)
-                mov.setType(movement.type());
+        if (movementUpdateDTO.getType() != null)
+            movement.setType(movementUpdateDTO.getType());
 
-            if(movement.amount()!=null)
-                mov.setAmount(movement.amount());
+        if (movementUpdateDTO.getAmount() != null)
+            movement.setAmount(movementUpdateDTO.getAmount());
 
-            if(movement.date()!=null)
-                mov.setDate(movement.date());
+        if (movementUpdateDTO.getDate() != null)
+            movement.setDate(movementUpdateDTO.getDate());
 
-            if(movement.material()!=null)
-                mov.setMaterial(movement.material());
+        if (movementUpdateDTO.getMaterial() != null)
+            movement.setMaterial(movementUpdateDTO.getMaterial());
 
-            if(movement.dentist()!=null)
-                mov.setDentist(movement.dentist());
+        if (movementUpdateDTO.getDentist() != null)
+            movement.setDentist(movementUpdateDTO.getDentist());
 
-            return repository.save(mov);
-        }).orElseThrow(() -> new IllegalArgumentException("Status com id " + id + " não existe."));
+        repository.save(movement);
+
+        return mapper.toDTO(movement);
     }
 
     public void removeById(Integer id){

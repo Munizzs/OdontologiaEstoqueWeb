@@ -1,49 +1,58 @@
 package com.project.odontologia.services;
 
-import com.project.odontologia.models.material.Material;
-import com.project.odontologia.models.material.RequestMaterial;
+import com.project.odontologia.models.material.*;
 import com.project.odontologia.repositories.MaterialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MaterialService {
 
     private final MaterialRepository repository;
+    private final MaterialMapper mapper;
 
     @Autowired
-    public MaterialService(MaterialRepository repository) {
+    public MaterialService(MaterialRepository repository, MaterialMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
-    public List<Material> findAll(){
-        return repository.findAll();
+    public List<MaterialDTO> findAll(){
+        return repository.findAll().stream()
+                .map(mapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public Optional<Material> findById(Integer id){
-        return repository.findById(id);
+    public MaterialDTO findById(Integer id){
+        Material material = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Item com id " + id + " não existe."));
+        return mapper.toDTO(material);
     }
 
-    public Material save(Material material){
-        return repository.save(material);
+    public MaterialDTO save(MaterialCreationDTO materialCreationDTO){
+        Material material = mapper.toEntity(materialCreationDTO);
+        repository.save(material);
+        return mapper.toDTO(material);
     }
 
-    public Material update(Integer id, RequestMaterial material){
-        return findById(id).map(item -> {
-            if(material.name()!=null)
-                item.setName(material.name());
+    public MaterialDTO update(Integer id, MaterialUpdateDTO materialUpdateDTO){
+        Material material = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Item com id " + id + " não existe."));
 
-            if(material.amount()!=null)
-                item.setAmount(material.amount());
+        if (materialUpdateDTO.getName() != null)
+            material.setName(materialUpdateDTO.getName());
 
-            if(material.category()!=null)
-                item.setCategory(material.category());
+        if (materialUpdateDTO.getAmount() != null)
+            material.setAmount(materialUpdateDTO.getAmount());
 
-            return repository.save(item);
-        }).orElseThrow(() -> new IllegalArgumentException("Item com id " + id + " não existe."));
+        if (materialUpdateDTO.getCategory() != null)
+            material.setCategory(materialUpdateDTO.getCategory());
+
+        repository.save(material);
+
+        return mapper.toDTO(material);
     }
 
     public void removeById(Integer id){

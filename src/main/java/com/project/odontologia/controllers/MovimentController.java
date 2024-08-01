@@ -1,8 +1,10 @@
 package com.project.odontologia.controllers;
 
 import com.project.odontologia.exceptions.ResourceNotFoundException;
-import com.project.odontologia.models.movement.InventoryTransactions;
-import com.project.odontologia.models.movement.RequestMovement;
+import com.project.odontologia.models.movement.Movement;
+import com.project.odontologia.models.movement.MovementCreationDTO;
+import com.project.odontologia.models.movement.MovementDTO;
+import com.project.odontologia.models.movement.MovementUpdateDTO;
 import com.project.odontologia.services.MovementService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -45,7 +47,7 @@ public class MovimentController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Integer id){
-        var movimentId = service.findById(id).orElseThrow(() -> new ResourceNotFoundException("status não encontrado com id " + id));
+        var movimentId = service.findById(id);
             return ResponseEntity.ok(movimentId);
     }
 
@@ -54,10 +56,9 @@ public class MovimentController {
             @ApiResponse(responseCode = "201", description = "Movimento registrado com sucesso")
     })
     @PostMapping
-    public ResponseEntity<?> read(@RequestBody RequestMovement data){
-        InventoryTransactions transactions = new InventoryTransactions(data);
-        service.save(transactions);
-        return ResponseEntity.status(201).body("Id "+transactions.getId()+" Criado");
+    public ResponseEntity<?> read(@RequestBody MovementCreationDTO movementCreationDTO){
+        MovementDTO movementDTO = service.save(movementCreationDTO);
+        return ResponseEntity.status(201).body("Id "+movementDTO.getId()+" Criado");
     }
 
     @Operation(summary = "Atualizar um movimento existente")
@@ -67,9 +68,9 @@ public class MovimentController {
             @ApiResponse(responseCode = "404", description = "Movimento não encontrado")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Integer id, @Valid @RequestBody RequestMovement data){
-        var movimentUpdate = service.update(id, data);
-            return ResponseEntity.ok(movimentUpdate);
+    public ResponseEntity<?> update(@PathVariable Integer id, @Valid @RequestBody MovementUpdateDTO movementUpdateDTO){
+        MovementDTO movementDTO = service.update(id, movementUpdateDTO);
+        return ResponseEntity.ok(movementDTO);
     }
 
     @Operation(summary = "Remover um movimento")
