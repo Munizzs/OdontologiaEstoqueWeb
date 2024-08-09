@@ -1,0 +1,43 @@
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;700&display=swap');
+
+/* Order */
+@layer reset, primeng;
+
+/* Reset CSS */
+@layer reset {
+    button,
+    input {
+        /* CSS to Reset */
+    }
+}
+
+:root{
+    --light-green: #2BFFB3;
+    --dark-green: #308F6D;
+    --light-green-tranparent: #2bffb14f;
+    --dark-green-tranparent: #308f6e5e;
+    --green: #12E100;
+    --red: #DD0000;
+    --border-green: #0B9966;
+}
+
+body {
+    overflow: hidden;
+    font-family: 'Roboto Slab', serif;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(./assets/images/background.jpg) no-repeat center center;
+    background-size: cover;
+    filter: blur(5px);
+    z-index: -1; 
+}

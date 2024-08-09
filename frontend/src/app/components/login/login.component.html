@@ -1,0 +1,35 @@
+<main>
+    <section class="main-section">
+        
+        <div class="box-login">
+            <div class="box-login-left">
+                <div class="box-elements-left">                   
+                    <h1>Logar</h1>       
+                    
+                        <p-floatLabel class="input-style">
+                            <input pInputText id="email" [(ngModel)]="email" />
+                            <label for="email">Email</label>
+                        </p-floatLabel>  
+                        
+                        <p-floatLabel>
+                            <p-password [(ngModel)]="password" [feedback]="false" />
+                            <label for="password">Password</label>
+                        </p-floatLabel>
+                    
+                    <p>
+                        <a href="#" (click)="onLogin()">Registrar-se</a>
+                    </p>
+                </div>
+            </div>  
+
+            <div class="box-login-right">
+                <div class="box-elements-right">
+
+                    <img ngSrc="/assets/icons/material-icon.png" width="70" height="70" priority/>
+                    <p>Estoque odontológico</p>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
