@@ -49,6 +49,13 @@ body::before {
     z-index: -1; 
 }
 
+.main-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 .box-screen-sign-in{
     display: flex;
     background: linear-gradient( var(--light-green-tranparent), var(--dark-green-tranparent));
@@ -94,4 +101,3 @@ body::before {
     background-color: var(--dark-green);
     box-shadow: 0 4px 8px var(--black-transparent);
 }
-

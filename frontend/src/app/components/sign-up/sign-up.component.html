@@ -1,1 +1,45 @@
-<p>sign-up works!</p>
+<main>
+    <section class="main-section">
+        <div class="box-screen-sign-in">
+            <div class="box-sign-up">
+                <img ngSrc="/assets/icons/dentist-icon.png" width="70" height="70" priority/>
+                <div class="box-sign-up-right">
+                    <p>Registrar-se</p>
+
+                    <p-floatLabel>
+                        <input pInputText id="name" [(ngModel)]="name" />
+                        <label for="name">Nome</label>
+                    </p-floatLabel> 
+
+                    <p-floatLabel>
+                        <input pInputText id="email" [(ngModel)]="email" />
+                        <label for="email">Email</label>
+                    </p-floatLabel> 
+
+                    <p-floatLabel>
+                        <input pInputText id="cro" [(ngModel)]="cro" />
+                        <label for="cro">CRO</label>
+                    </p-floatLabel> 
+
+                    <p-floatLabel>
+                        <input pInputText id="speciality" [(ngModel)]="speciality" />
+                        <label for="speciality">Especialidade</label>
+                    </p-floatLabel> 
+
+                    <p-floatLabel>
+                        <input pInputText id="password" [(ngModel)]="password" />
+                        <label for="password">Senha</label>
+                    </p-floatLabel> 
+
+                    <p-floatLabel>
+                        <input pInputText id="passwordConfirm" [(ngModel)]="passwordConfirm" />
+                        <label for="passwordConfirm">Confirmar Senha</label>
+                    </p-floatLabel> 
+                    <div class="button-sign-in">
+                        <button>Logar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
