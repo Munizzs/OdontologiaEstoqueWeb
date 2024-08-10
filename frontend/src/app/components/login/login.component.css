@@ -38,13 +38,51 @@
     bottom: 25px; 
 }
 
-.box-elements-left p {
-    position: relative;
-    top: 50px; 
+.custom-floatLabel {
+    margin-bottom: 20px;
 }
 
-.input-style {
-    margin-bottom: 25px;
+.custom-floatLabel input{
+    position: relative;
+    padding-right: 40px;
+}
+
+.button-login button {
+    position: relative;
+    top: 25px;
+    padding: 10px 70px;
+    background-color: transparent;
+    border-radius: 10px;
+    border: 2px solid var(--dark-green);
+    color: var(--dark-green);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    overflow: hidden;
+    transition: color 0.3s ease;
+}
+
+.button-login button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--dark-green);
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    transform: scale(0);
+}
+
+.button-login button:hover::before {
+    transform: scale(1);
+}
+
+.button-login button:hover {
+    color: black;
+    background-color: var(--dark-green);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .box-login-right{
@@ -67,7 +105,7 @@
 
 .box-elements-right p{
     position: relative;
-    top: 110px;
+    
 }
 
 a{
@@ -82,13 +120,17 @@ a{
     bottom: -2px;
     width: 0;
     height: 1px;
-    background: #000000;
+    background: var(--light-green);
     transition: width 0.7s;
 }
 
 a:hover::after {
     width: 90%;
 }    
+
+a:hover {
+   color: var(--light-green);
+} 
 
 p{
     font-weight: bold;
