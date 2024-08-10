@@ -13,7 +13,7 @@
         background: none;
         font: inherit;
         color: inherit;
-        box-shadow: 0 4px 8px var(--black-transparent);
+        box-shadow: 0 2px 8px var(--black-transparent);
     }
     label{
         color: var(--black-transparent);
