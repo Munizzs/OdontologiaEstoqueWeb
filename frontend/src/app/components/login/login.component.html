@@ -1,7 +1,7 @@
 <main>
     <section class="main-section">
         
-        <div class="box-login">
+        <div class="box-screen-sign-in">
             <div class="box-login-left">
                 <div class="box-elements-left">                   
                     <h1>Logar</h1>       
@@ -12,11 +12,12 @@
                         </p-floatLabel>  
                         
                         <p-floatLabel class="custom-floatLabel">
-                            <p-password [(ngModel)]="password" [feedback]="false"  [toggleMask]="true" />
+                            <p-password [(ngModel)]="password"/>
+                            <!-- <p-password [(ngModel)]="password" [toggleMask]="true" /> -->
                             <label for="password">Password</label>
                         </p-floatLabel>
                     
-                    <div class="button-login">
+                    <div class="button-sign-in ">
                         <button>Login</button>
                     </div>
                 </div>
@@ -28,7 +29,7 @@
                     <img ngSrc="/assets/icons/material-icon.png" width="70" height="70" priority/>
                     <p>Estoque odontológico</p>
                     <p>
-                        <a href="#" (click)="onLogin()">< Registrar-se ></a>
+                        <a href="#" (click)="onLogin()"> Registrar-se </a>
                     </p>
 
                 </div>
