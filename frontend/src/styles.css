@@ -26,8 +26,8 @@
     --dark-green: #308F6D;
     --light-green-tranparent: #2bffb14f;
     --dark-green-tranparent: #308f6e5e;
-    --green: #13e100b6;
-    --red: #dd0000c0;
+    --green: #13e1007c;
+    --red: #dd000086;
     --border-green: #0B9966;
     --black-transparent: rgba(0, 0, 0, 0.534);
 }
@@ -52,9 +52,10 @@ body::before {
 
 .main-section{
     display: flex;
+    height: 100vh;
+    width: 100vw;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
 /* Default Container */
