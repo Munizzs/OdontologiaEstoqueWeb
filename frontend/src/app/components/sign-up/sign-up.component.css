@@ -1,0 +1,49 @@
+.box-sign-up{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.box-sign-up-right{
+    display: flex;
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.box-sign-up img {
+    transition: transform 0.4s ease-in-out; /* Aumenta a duração e ajusta a curva de transição */
+    transform-style: preserve-3d;
+    perspective: 1000px; /* Define a perspectiva */
+}
+
+.box-sign-up img:hover {
+    transform: perspective(1000px) rotateY(10deg) rotateX(20deg) scale(1.05); /* Aumenta a rotação e escala */
+}
+
+.inputs{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin: 15px 0;
+}
+
+.left-column, .right-column {
+    flex: 1;
+}
+
+p-floatLabel {
+    margin-bottom: 25px; 
+    display: block;
+}
+
+p{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+a{
+    color: black;
+}
