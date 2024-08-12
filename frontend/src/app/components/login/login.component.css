@@ -1,3 +1,8 @@
+.default-container{
+    width: 800px;
+    height: 400px;
+}    
+
 .box-login-left{
     /* border: 1px solid rgb(2, 0, 116); */
     width: 62%;
@@ -32,7 +37,7 @@
     padding-right: 40px;
 }
 
-.button-sign-in button {
+.btn-default button {
     position: relative;
     top: 25px;
 }
@@ -49,7 +54,7 @@
 }
 
 .box-login-right:hover{
-    box-shadow: -5px 3px 8px var(--black-transparent);
+    box-shadow: -3px 1px 10px var(--black-transparent);
 }
 
 .box-elements-right{
