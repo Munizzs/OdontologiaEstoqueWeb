@@ -1,17 +1,16 @@
 <main>
     <section class="main-section">
-
-        <div class="home-left">
-            <button class="switch-mode">              
-                <img class="pi pi-warehouse" src="" alt="">
-            </button>
-            <div class="default-container left">
-                <p>Movimentação</p>
-                <div class="movements-status">
-
-                </div>
-            </div>
+      <div class="home-left">
+        <button class="switch-mode">
+          <img class="pi pi-warehouse" src="" alt="">
+        </button>
+        <div class="default-container left">
+          <p>Movimentação</p>
+          <div class="movements-status">
+            
+          </div>
         </div>
+      </div>
 
         <div class="home-right">
             <div class="default-container right">
@@ -20,13 +19,27 @@
             </div>
 
             <div class="buttons-in-out">
-                <button class="button-in">Entrada</button>
-                <button class="button-out">Saida</button>
-            </div>
+                <button 
+                  class="button-in" 
+                  [ngClass]="{'selected': selectedButton === 'entrada'}">
+                  Entrada
+                </button>
+                <button 
+                  class="button-out" 
+                  [ngClass]="{'selected': selectedButton === 'saida'}">
+                  Saída
+                </button>
+              </div>              
 
             <div class="amounts">
-                <p>Quantidade:</p> <input type="number">
-                <p>Material Id:</p> <input type="number">
+                <div class="amount">
+                    <p>Quantidade:</p> <input type="number" [(ngModel)]="value1" min="0" max="100">
+                </div>
+                <div class="number-id">
+                    <p>Material Id:</p> <input type="number" [(ngModel)]="value2" min="0" max="100">
+                </div>
+                
+                
             </div>
 
             <div class="btn-default">
