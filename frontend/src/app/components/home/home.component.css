@@ -24,7 +24,9 @@
 .left{
     width: 25vw;
     height: 75vh;
-    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .home-right{
@@ -35,7 +37,6 @@
 }
 
 .right{
-    
     position: absolute;
     top: 0;
     right: 0;
@@ -43,14 +44,11 @@
     width: 220px;
     align-items: center;
     gap: 10px;
+    cursor: pointer;
 }
 
 .right img{
     margin-left: 10px;
-}
-
-.right p{
-    
 }
 
 .buttons-in-out{
@@ -63,12 +61,46 @@
     padding: 10px 15px;
     width: 140px;
     border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 .button-in{
     background-color: var(--green);
 }
 
+.button-in.selected{
+    background-color: #13e100;
+    border: 1px solid black;
+}
+
 .button-out{
     background-color: var(--red);
 }
+
+.button-out.selected {
+    background-color: #dd0000;
+    border: 1px solid black;
+}
+
+.amounts{
+    margin: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.amount, .number-id{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.amounts input{
+    width: 48px;
+    height: 35px;
+    border-radius: 8px;
+}
+
+  
